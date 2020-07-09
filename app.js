@@ -23,40 +23,47 @@ function createTeam() {
             "Add Intern?",
             "Add Manager?",
             "Create Team Page?"],
-        name: "userChoice",
+        name: "choice",
         message: "Would you like to...?",
 
     }).then(function ({ choice }) {
+
+        
         switch (choice) {
-            case "Add Engineer":
-                console.log("You added an Engineer")
+            case "Add Engineer?":
+                // console.log("You added an Engineer")
                 makeEngineer();
                 break;
 
-            case "Add Intern":
-                console.log("You added an Intern")
+            case "Add Intern?":
+                // console.log("You added an Intern")
                 makeIntern();
                 break;
 
-            case "Add Manager":
-                console.log("You added a Manager")
+            case "Add Manager?":
+                // console.log("You added a Manager")
                 makeManager();
                 break;
-                
-            case "Create Team Page":
+
+            case "Create Team Page?":
                 if (teamMembers.length >0) {
                 console.log("Let's Go!")
                 fs.writeFile(outputPath, render(teamMembers), function(err) {
                     if (err) {
                             return console.log(err);
                         }
-                        console.log("Congratulations!  Complete.");
+                        console.log("Congratulations!  Team complete.");
                 })
 
             } else {
                 console.log("Oops!  We need to add some members!")
             }                  
             break;
+
+            default:
+
+                
+                break;
 
         }
     })
