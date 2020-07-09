@@ -12,8 +12,11 @@ const render = require("./lib/htmlRenderer");
 
 const teamMembers = [];
 
+console.log("Welcome to Team Profile Generator");
+
+
 function createTeam() {
-    inquirer.prompt ({
+    inquirer.prompt({
         type: "list",
         choices: [
             "Add Engineer?",
@@ -21,8 +24,8 @@ function createTeam() {
             "Add Manager?",
             "Create Team Page?"],
         name: "userChoice",
-        message:"Would you like to...?",
-        
+        message: "Would you like to...?",
+
     }).then(function ({ choice }) {
         switch (choice) {
             case "Add Engineer":
@@ -30,46 +33,131 @@ function createTeam() {
                 makeEngineer();
                 break;
 
-            // case "Add Intern":
-            //     console.log("You added an Intern")
-            //     makeIntern();
-            //     break;
+            case "Add Intern":
+                console.log("You added an Intern")
+                makeIntern();
+                break;
+
+            case "Add Manager":
+                console.log("You added a Manager")
+                makeManager();
+                break;
+                
+            case "Create Team Page":
+                if (teamMembers.length >0) {
+                console.log("Let's Go!")
+                fs.writeFile(outputPath, render(teamMembers), function(err) {
+                    if (err) {
+                            return console.log(err);
+                        }
+                        console.log("Congratulations!  Complete.");
+                })
+
+            } else {
+                console.log("Oops!  We need to add some members!")
+            }                  
+            break;
 
         }
     })
 }
-createTeam();
+
 
 
 function makeEngineer() {
     inquirer.prompt([
         {
             type: "input",
-            message: "Employee's Name?",
+            message: "Engineer's Name?",
             name: "name"
         },
         {
             type: "input",
-            message: "Employee's Id?",
+            message: "Engineer's Id?",
             name: "id"
         },
         {
             type: "input",
-            message: "Employee's E-mail?",
+            message: "Engineer's E-mail?",
             name: "email"
         },
         {
             type: "input",
-            message: "Employee's GitHub Name?",
+            message: "Engineer's GitHub Name?",
             name: "github"
         },
-    ]).then(function (answers) {
+    ]).then(function(answers){
         const newEngineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
         teamMembers.push(newEngineer);
+     
+        createTeam();
+
     })
 }
 
+function makeIntern() {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Intern's Name?",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "Intern's Id?",
+            name: "id"
+        },
+        {
+            type: "input",
+            message: "Intern's E-mail?",
+            name: "email"
+        },
+        {
+            type: "input",
+            message: "Intern's School?",
+            name: "school"
+        },
+    ]).then(function(answers){
+        const newIntern = new Intern(answers.name, answers.id, answers.email, answers.school);
+        teamMembers.push(newIntern);
+     
+        createTeam();
 
+    })
+}
+
+function makeManager() {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Manager's Name?",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "Manager's Id?",
+            name: "id"
+        },
+        {
+            type: "input",
+            message: "Manager's E-mail?",
+            name: "email"
+        },
+        {
+            type: "input",
+            message: "Manager's Office Number?",
+            name: "officeNumber"
+        },
+    ]).then(function(answers){
+        const newManager = new Engineer(answers.name, answers.id, answers.email, answers.officeNumber);
+        teamMembers.push(newManager);
+     
+        createTeam();
+
+    })
+}
+
+createTeam();
 
 
 
