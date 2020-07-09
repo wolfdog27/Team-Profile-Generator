@@ -57,6 +57,7 @@ function createTeam() {
 
             } else {
                 console.log("Oops!  We need to add some members!")
+                createTeam ();
             }                  
             break;
 
