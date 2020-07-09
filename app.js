@@ -157,7 +157,7 @@ function makeManager() {
             name: "officeNumber"
         },
     ]).then(function(answers){
-        const newManager = new Engineer(answers.name, answers.id, answers.email, answers.officeNumber);
+        const newManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
         teamMembers.push(newManager);
      
         createTeam();
